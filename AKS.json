@@ -1,0 +1,39 @@
+{
+    "properties": {
+      "displayName": "Security Baseline - Prevent local auth for AKS",
+      "policyType": "Custom",
+      "description": "Prevent local authentication method for AKS.",
+      "version": "1.0.0",
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Deny"
+          ],
+          "defaultValue": "Deny"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+                "field": "type",
+                "equals": "Microsoft.ContainerService/managedClusters"
+              },
+              {
+                "field": "Microsoft.ContainerService/managedClusters/disableLocalAccounts",
+                "notEquals": true
+              }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+          }
+        }
+      }
+    }

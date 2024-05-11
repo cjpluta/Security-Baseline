@@ -1,0 +1,39 @@
+{
+    "properties": {
+      "displayName": "Security Baseline - Prevent local auth for IoT Hubs",
+      "policyType": "Custom",
+      "description": "Prevents IoT Hubs from being deployed with local authentication enabled.",
+      "version": "1.0.0",
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Deny"
+          ],
+          "defaultValue": "Deny"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Devices/IotHubs"
+            },
+            {
+              "field": "Microsoft.Devices/IotHubs/disableLocalAuth",
+              "notEquals": true
+            }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+          }
+        }
+      }
+    }

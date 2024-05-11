@@ -1,0 +1,64 @@
+{
+    "properties": {
+      "displayName": "Security Baseline - Prevent local auth for storage accounts",
+      "policyType": "Custom",
+      "mode": "All",
+      "description": "This policy denies storage accounts that have local authentication (key access) enabled. All storage accounts should have key access disabled, and use Managed Identities + RBAC to access the account.",
+      "metadata": {
+        "category": "SecretsBaseline",
+        "createdBy": "b5dec21f-ae92-44ef-a06b-cc1d9cea84b9",
+        "createdOn": "2024-05-10T23:02:58.9158588Z",
+        "updatedBy": null,
+        "updatedOn": null
+      },
+      "version": "1.0.0",
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the audit policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Deny",
+            "Disabled"
+          ],
+          "defaultValue": "Deny"
+        },
+        "allowSharedKeyAccess": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Restrict Shared Key Access",
+            "description": "Whether key access is enabled on the storage account."
+          },
+          "allowedValues": [
+            "True",
+            "False"
+          ],
+          "defaultValue": "False"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Storage/storageAccounts"
+            },
+            {
+              "anyOf": [
+                {
+                  "field": "Microsoft.Storage/storageAccounts/allowSharedKeyAccess",
+                  "notEquals": "[parameters('allowSharedKeyAccess')]"
+                }
+              ]
+            }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+        }
+      }
+    }
+  }

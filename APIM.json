@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "displayName": "Security Baseline - Prevent local auth for API Management",
+    "description": "Prevent local authentication method for APIM.",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of this policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Disabled"
+        ],
+        "defaultValue": "Audit"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.ApiManagement/service/portalconfigs"
+          },
+          {
+            "field": "Microsoft.ApiManagement/service/portalconfigs/enableBasicAuth",
+            "notEquals": false
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}

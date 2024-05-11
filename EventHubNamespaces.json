@@ -1,0 +1,39 @@
+{
+    "properties": {
+      "displayName": "Security Baseline - Prevent local auth for Event Hub Namespaces",
+      "policyType": "Custom",
+      "description": "Prevent local authentication method for Event Hub Namespaces.",
+      "version": "1.0.0",
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Deny"
+          ],
+          "defaultValue": "Deny"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.EventHub/Namespaces"
+            },
+            {
+              "field": "Microsoft.EventHub/Namespaces/disableLocalAuth",
+              "notEquals": true
+            }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+          }
+        }
+      }
+    }

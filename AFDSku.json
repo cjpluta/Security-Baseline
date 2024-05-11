@@ -1,0 +1,39 @@
+{
+    "properties": {
+      "displayName": "Security Baseline - AFD SKU must be Premium",
+      "policyType": "Custom",
+      "description": "AFD SKU must be Premium.",
+      "version": "1.0.0",
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Deny"
+          ],
+          "defaultValue": "Deny"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+                "field": "type",
+                "equals": "Microsoft.Cdn/profiles"
+              },
+              {
+                "field": "Microsoft.Cdn/profiles/sku.name",
+                "notEquals": "Premium_AzureFrontDoor"
+              }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+          }
+        }
+      }
+    }

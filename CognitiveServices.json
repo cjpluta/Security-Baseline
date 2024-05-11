@@ -1,0 +1,39 @@
+{
+    "properties": {
+      "displayName": "Security Baseline - Prevent local auth for Cognitive Services",
+      "policyType": "Custom",
+      "description": "Prevent local authentication for Cognitive Services accounts.",
+      "version": "1.0.0",
+      "parameters": {
+        "effect": {
+          "type": "String",
+          "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+          },
+          "allowedValues": [
+            "Audit",
+            "Deny"
+          ],
+          "defaultValue": "Deny"
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.CognitiveServices/accounts"
+            },
+            {
+              "field": "Microsoft.CognitiveServices/accounts/disableLocalAuth",
+              "notEquals": true
+            }
+          ]
+        },
+        "then": {
+          "effect": "[parameters('effect')]"
+          }
+        }
+      }
+    }
