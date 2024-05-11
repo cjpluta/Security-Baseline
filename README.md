@@ -1,11 +1,11 @@
 # Security Baseline
- This repo ontains Azure Policies to help establish a security baseline for resources that blocks local authentication during deployment. 
+ This repo contains Azure Policies to help establish a security baseline for resources that blocks local authentication during deployment. 
 
 ## Instructions
 These are the general steps for importing the policy definitions.
 
 1. Download this repo and extract all policy definitions.
-1. If using Cloud Shell, upload the definitions to the Cloud Shell mounted storage. If using local PowerShell, open and navigate to the directory where you extracted the definitions.
+1. If using Cloud Shell, upload the JSON definition files to the Cloud Shell mounted storage. If using local PowerShell, open and navigate to the directory where you extracted the definitions.
 1. Run the following commands:
 
 ```PowerShell - Set Sub ID
