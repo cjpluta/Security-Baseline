@@ -8,7 +8,8 @@ These are the general steps for importing the policy definitions.
 1. If using Cloud Shell, upload the JSON definition files to the Cloud Shell mounted storage. If using local PowerShell, open and navigate to the directory where you extracted the definitions.
 1. Run the following commands:
 
-```PowerShell - Set Sub ID
+```PowerShell - Set context and ID
+Set-AzContext -Subscription "yourSubscriptionID"
 $subid = "/subscriptions/yourSubscriptionID"
 ```
 
@@ -19,7 +20,7 @@ New-AzPolicyAssignment -Name "Security Baseline - Storage Accounts" -PolicyDefin
 ```
 
 ```PowerShell - Cognitive Services
-New-AzPolicyDefinition -Name "Security Baseline - Cognitive Services" -Description "Modifies a Cognitive Service account to disable local authentication" -Policy 'CognitiveServices.json'
+New-AzPolicyDefinition -Name "Security Baseline - Cognitive Services" -Description "Prevents a Cognitive Service account that uses disable local authentication" -Policy 'CognitiveServices.json'
 $policy = Get-AzPolicyDefinition -Name "Security Baseline - Cognitive Services" 
 New-AzPolicyAssignment -Name "Security Baseline - Cognitive Services" -PolicyDefinition $policy -Scope $subid
 ```
