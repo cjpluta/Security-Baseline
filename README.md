@@ -127,6 +127,12 @@ az policy definition create \
           --description  <(cat $policy | jq .properties.description) \
           --rules <(cat $policy | jq .properties.policyRule) \
           --params <(cat $policy | jq .properties.parameters)
+
+az policy assignment create \
+          --name "Security Baseline - ${policy%.*}" \
+          --policy "Security Baseline - ${policy%.*}" \
+          --scope $SUBID
+
 done
 ```
 
